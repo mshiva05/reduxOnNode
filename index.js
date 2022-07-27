@@ -1,14 +1,29 @@
-const { createStore } = require('redux')
+const { createStore, combineReducers } = require('redux')
+const BUY_LAPTOP = 'BUY_LAPTOP'
+const BUY_MOBILE = 'BUY_MOBILE'
 // to run this file type node filename.js in terminal
 // initial state
 const initialState = {
   numberOfLaptops: 100,
+  numberOfMobiles: 100,
 }
 
 //function returning an action- call this function to emit action
 const buyLaptop = () => {
   return {
-    type: 'BUY_LAPTOP',
+    type: BUY_LAPTOP,
+  }
+}
+
+const buyMobile = () => {
+  return {
+    type: BUY_MOBILE,
+  }
+}
+
+const windowShopping = () => {
+  return {
+    type: 'NONE',
   }
 }
 
@@ -21,8 +36,16 @@ const reducer = (state = initialState, action) => {
   // }
 
   switch (action.type) {
-    case 'BUY_LAPTOP':
-      return { numberOfLaptops: state.numberOfLaptops - 1 }
+    case BUY_LAPTOP:
+      return {
+        numberOfLaptops: state.numberOfLaptops - 1,
+        numberOfMobiles: state.numberOfMobiles,
+      }
+    case BUY_MOBILE:
+      return {
+        numberOfLaptops: state.numberOfLaptops,
+        numberOfMobiles: state.numberOfMobiles - 1,
+      }
     default:
       return state
   }
@@ -40,5 +63,13 @@ store.subscribe(() => {
   console.log(store.getState())
 })
 
+
+// const rootReducer = combineReducers({other reducer function 1, other reducer funtion 2})
+store.dispatch(windowShopping())
+store.dispatch(buyMobile())
 store.dispatch(buyLaptop())
 store.dispatch(buyLaptop())
+
+store.dispatch(buyMobile())
+store.dispatch(buyMobile())
+store.dispatch(windowShopping())
