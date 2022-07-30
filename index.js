@@ -1,4 +1,8 @@
-const { createStore, combineReducers } = require('redux')
+const { createStore, combineReducers, applyMiddleware } = require('redux')
+// applymiddleware is added to support Redux logger
+// Redux logger can be installed by npm i redux-logger
+
+const logger = require('redux-logger').default
 const BUY_LAPTOP = 'BUY_LAPTOP'
 const BUY_MOBILE = 'BUY_MOBILE'
 // to run this file type node filename.js in terminal
@@ -51,7 +55,8 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-const store = createStore(reducer)
+// while creating store, pass ApplyMiddleWear as another argument and pass logger to it
+const store = createStore(reducer, applyMiddleware(logger))
 console.log(store)
 // above created store when we log contains multiple functions as below:
 // dispatch: [Function: dispatch],
@@ -63,7 +68,6 @@ store.subscribe(() => {
   console.log(store.getState())
 })
 
-
 // const rootReducer = combineReducers({other reducer function 1, other reducer funtion 2})
 store.dispatch(windowShopping())
 store.dispatch(buyMobile())
@@ -73,3 +77,6 @@ store.dispatch(buyLaptop())
 store.dispatch(buyMobile())
 store.dispatch(buyMobile())
 store.dispatch(windowShopping())
+
+// Redux logger can be installed by npm i redux-logger
+// after installing redux logger we passed it as argument to applyMiddlewaer
